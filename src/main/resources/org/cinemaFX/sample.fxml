@@ -24,10 +24,10 @@
                                        <font>
                                           <Font name="System Bold" size="27.0" />
                                        </font></Text>
-                                    <TableView layoutX="68.0" layoutY="98.0" prefHeight="324.0" prefWidth="708.0">
+                                    <TableView fx:id="tableViewSesiones" layoutX="65.0" layoutY="122.0" prefHeight="336.0" prefWidth="678.0">
                                       <columns>
-                                        <TableColumn fx:id="listViewTitleCinema" prefWidth="75.0" text="Cinema" />
-                                        <TableColumn prefWidth="75.0" text="Sesión" />
+                                        <TableColumn fx:id="tableColumnTitleCinema" minWidth="150.0" prefWidth="75.0" text="Cine" />
+                                        <TableColumn fx:id="tableColumnSesion" minWidth="150.0" prefWidth="75.0" text="Sesion" />
                                       </columns>
                                     </TableView>
                                  </children>

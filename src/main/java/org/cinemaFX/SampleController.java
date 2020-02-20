@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -42,7 +43,7 @@ public class SampleController implements Initializable {
     private double x=0, y=0;
 
     ObservableList<String> listObservableFilms =FXCollections.observableArrayList();
-    ObservableList<String> listObservableSesions =FXCollections.observableArrayList();
+    ObservableList<Sesion> listObservableSesions =FXCollections.observableArrayList();
 
 
     @FXML
@@ -86,10 +87,14 @@ public class SampleController implements Initializable {
 
     @FXML Text sesionTitle;
 
-
+    @FXML
+    private TableColumn<Sesion, String> tableColumnTitleCinema;
 
     @FXML
-    private TableColumn<Cinema, String> listViewTitleCinema;
+    private TableView<Sesion> tableViewSesiones;
+
+    @FXML
+    private TableColumn<Sesion, String> tableColumnSesion;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -177,7 +182,6 @@ public class SampleController implements Initializable {
             textTitleFilm.setText(filmTitle);
             for (Film f: films) {
                 if(f.getTitol().equals(filmTitle)){
-
                     String urlImage=url+f.getImage();
                     Image imageMovie = new Image(urlImage);
 
@@ -185,10 +189,16 @@ public class SampleController implements Initializable {
                     direcctorFilm.setText(f.getDireccio());
                     añoFilm.setText(String.valueOf(f.getAny()));
 
-                    List<String> listaCines = sesions.stream().filter(sesion -> f.getIdFilm() == sesion.getIdFilm()).map(sesion -> sesion.getNomCine()).collect(Collectors.toList());
-//                    listaCines.forEach(System.out::println);
-//                    System.out.println(".");
+                    List<Sesion> listaCines = sesions.stream().filter(sesion -> f.getIdFilm() == sesion.getIdFilm()).collect(Collectors.toList());
                     listObservableSesions.addAll(listaCines);
+
+//                    TableColumn cineColumn = new TableColumn("Cine");
+//                    cineColumn.setCellValueFactory(new PropertyValueFactory<Cinema, String>("cine"));
+//                    tableViewSesiones.getColumns().setAll(cineColumn);
+
+                    tableColumnTitleCinema.setCellValueFactory(new PropertyValueFactory("nomCine"));
+                    tableViewSesiones.setItems(listObservableSesions);
+
                     sesionTitle.setText(f.getTitol());
                 }
             }
@@ -233,6 +243,7 @@ public class SampleController implements Initializable {
     }
 
     public void clickFilmSesion(MouseEvent mouseEvent) {
+
         paneSesion.toFront();
     }
 }
